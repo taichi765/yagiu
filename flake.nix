@@ -27,7 +27,7 @@
       packages = forAllSystems (
         { pkgs }: {
           default = pkgs.buildGoModule {
-            pname = "git-manage-utils";
+            pname = "yagiu";
             version = "0.0.0";
             src = ./.;
             vendorHash = "sha256-YIOZrXOxBDUUI+39m5JJIm9kGn+rhyLL4XU+DAkbTUo=";
