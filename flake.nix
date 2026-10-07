@@ -30,7 +30,7 @@
             pname = "yagiu";
             version = "0.0.0";
             src = ./.;
-            vendorHash = "sha256-YIOZrXOxBDUUI+39m5JJIm9kGn+rhyLL4XU+DAkbTUo=";
+            vendorHash = "sha256-q3GqoDNsqvb++E1Js5oK3+t62kIT9OxLJFu7bjyfCFY=";
           };
         }
       );
