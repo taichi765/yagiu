@@ -22,9 +22,10 @@ func (l *ListCmd) Run(ctx *Context) error {
 var cli struct {
 	Verbose bool `heko:"Print verbose output"`
 
-	Clone  CloneCmd  `cmd:"" help:"Clone a remote repository."`
-	List   ListCmd   `cmd:"" help:"List git repositories."`
-	Latest LatestCmd `cmd:"" help:"Get the latest commit of the specified repository."`
+	Clone   CloneCmd   `cmd:"" help:"Clone a remote repository."`
+	List    ListCmd    `cmd:"" help:"List git repositories."`
+	Latest  LatestCmd  `cmd:"" help:"Get the latest commit of the specified repository."`
+	Commits CommitsCmd `cmd:"" help:"Commands related to (conventional) commits."`
 }
 
 func main() {
