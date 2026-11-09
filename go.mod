@@ -1,6 +1,6 @@
 module github.com/taichi765/yagiu
 
-go 1.26.5
+go 1.27.3
 
 require (
 	github.com/alecthomas/kong v1.16.1
