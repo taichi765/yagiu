@@ -7,12 +7,15 @@ import (
 	"fmt"
 	"slices"
 	"strings"
+	"time"
 
 	"github.com/google/go-github/v92/github"
 )
 
 type CommitsCmd struct {
-	Repo string `arg:"" help:"format: <owner>/<repo>"`
+	Repo  string `arg:"" help:"format: <owner>/<repo>"`
+	Since string `help:"format: yyyy-mm-dd"`
+	Until string `help:"format: yyyy-mm-dd"`
 }
 
 func (c *CommitsCmd) Run(ctx *Context) error {
@@ -23,16 +26,32 @@ func (c *CommitsCmd) Run(ctx *Context) error {
 	owner := sep[0]
 	repoName := sep[1]
 
+	opts := &github.CommitsListOptions{
+		ListOptions: github.ListOptions{
+			PerPage: 100,
+		},
+	}
+	if c.Since != "" {
+		t, err := time.Parse(time.DateOnly, c.Since)
+		if err != nil {
+			return fmt.Errorf("value for --since is invalid: it should be fomatted like 2006-01-02: %w", err)
+		}
+		opts.Since = t
+	}
+	if c.Until != "" {
+		t, err := time.Parse(time.DateOnly, c.Until)
+		if err != nil {
+			return fmt.Errorf("value for --until is invalid: it should be fomatted like 2006-01-02: %w", err)
+		}
+		opts.Until = t
+	}
+
 	client, err := NewGitHubClient()
 	if err != nil {
 		return fmt.Errorf("failed to create github client: %w", err)
 	}
 
-	it := client.Repositories.ListCommitsIter(context.TODO(), owner, repoName, &github.CommitsListOptions{
-		ListOptions: github.ListOptions{
-			PerPage: 100,
-		},
-	})
+	it := client.Repositories.ListCommitsIter(context.TODO(), owner, repoName, opts)
 	commits := make([]*github.RepositoryCommit, 0, 10000)
 	for c, err := range it {
 		if err != nil {
